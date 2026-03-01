@@ -1,5 +1,10 @@
 pipeline {
   agent any
+  
+  options {
+    timestamps()
+    disableConcurrentBuilds()
+    buildDiscarder(logRotator(numToKeepStr: '10'))
 
   parameters {
     choice(name: 'APP_ENV', choices: ['dev', 'staging', 'prod'], description: 'App environment')
