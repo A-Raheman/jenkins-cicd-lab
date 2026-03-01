@@ -51,14 +51,19 @@ pipeline {
       steps {
         sh '''
 	  set -e
+	  
+	  echo "APP_ENV=${APP_ENV}"
+	  echo "IMAGE=${LOCAL_IMAGE}:${IMAGE_TAG}"
 
-          cid=$(docker run -d -e APP_ENV="$APP_ENV" -p 5050:5000 $"LOCAL_IMAGE:$IMAGE_TAG")
+          cid=$(docker run -d -e APP_ENV="{$APP_ENV}" -p 5050:5000 $"{LOCAL_IMAGE}:${IMAGE_TAG}")
           sleep 2
+
           curl -s http://localhost:5050 | grep -q '"service":"jenkins-cicd-lab"' || {
 	    docker logs "$cid"
             docker rm -f "$cid"
 	    exit 1
 	  }
+
 	 docker rm -f "$cid"
         '''
       }
