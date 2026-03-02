@@ -111,7 +111,7 @@ pipeline {
 
   post {
     success {
-      echo "✅ Pushed ${DOCKERHUB_REPO}:${IMAGE_TAG} and :latest (APP_ENV=${APP_ENV})"
+      echo "✅ Pushed ${DOCKERHUB_REPO}:${IMAGE_TAG} and :latest (APP_ENV=${params.APP_ENV})"
     }
     always {
       echo "Pipeline finished."
